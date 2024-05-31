@@ -17,3 +17,7 @@ end
 
 require "lazy_setup"
 require "polish"
+
+
+local opt = vim.opt
+opt.wrap = true
