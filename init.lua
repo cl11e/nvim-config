@@ -17,6 +17,7 @@ end
 
 require "lazy_setup"
 require "polish"
+require('lspconfig').gleam.setup({})
 
 
 local opt = vim.opt
