@@ -7,6 +7,7 @@ if not (vim.env.LAZY or (vim.uv or vim.loop).fs_stat(lazypath)) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+
 -- validate that lazy is available
 if not pcall(require, "lazy") then
   -- stylua: ignore
@@ -18,7 +19,17 @@ end
 require "lazy_setup"
 require "polish"
 require('lspconfig').gleam.setup({})
+require("lspconfig").vtsls.setup({})
+-- local lspconfig = require("lspconfig") lspconfig["ts_ls"].setup({})
 
+-- vim.api.nvim_set_keymap("n", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("v", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "<LocalLeader>a", "<cmd>CodeCompanionToggle<cr>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("v", "<LocalLeader>a", "<cmd>CodeCompanionToggle<cr>", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("v", "ga", "<cmd>CodeCompanionAdd<cr>", { noremap = true, silent = true })
+--
+-- -- Expand 'cc' into 'CodeCompanion' in the command line
+-- vim.cmd([[cab cc CodeCompanion]])
 
 local opt = vim.opt
 opt.wrap = true

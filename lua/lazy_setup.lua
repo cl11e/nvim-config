@@ -1,3 +1,4 @@
+
 require("lazy").setup({
   {
     "AstroNvim/AstroNvim",
