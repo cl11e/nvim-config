@@ -15,11 +15,6 @@ return {
     config = function() require("lsp_signature").setup() end,
   },
 
-  {
-    "pmizio/typescript-tools.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    opts = {},
-  },
   -- == Examples of Overriding Plugins ==
 
   -- customize alpha options
@@ -57,20 +52,81 @@ return {
       luasnip.filetype_extend("javascript", { "javascriptreact" })
     end,
   },
-  -- {
-  --   "olimorris/codecompanion.nvim",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-treesitter/nvim-treesitter",
-  --     "hrsh7th/nvim-cmp",       -- Optional: For using slash commands and variables in the chat buffer
-  --     {
-  --       "stevearc/dressing.nvim", -- Optional: Improves the default Neovim UI
-  --       opts = {},
-  --     },
-  --     "nvim-telescope/telescope.nvim", -- Optional: For using slash commands
-  --   },
-  --   config = true
-  -- },
+  --
+  {
+    'sethen/line-number-change-mode.nvim',
+    config = function()
+        require('catppuccin').setup({
+            flavour = 'mocha',
+        });
+        local palette = require('catppuccin.palettes').get_palette('mocha')
+
+        
+        require("line-number-change-mode").setup({
+            mode = {
+                i = {
+                    bg = palette.green,
+                    fg = palette.mantle,
+                    bold = true,
+                },
+                n = {
+                    bg = palette.blue,
+                    fg = palette.mantle,
+                    bold = true,
+                },
+                R = {
+                    bg = palette.maroon,
+                    fg = palette.mantle,
+                    bold = true,
+                },
+                v = {
+                    bg = palette.mauve,
+                    fg = palette.mantle,
+                    bold = true,
+                },
+                V = {
+                    bg = palette.mauve,
+                    fg = palette.mantle,
+                    bold = true,
+                },
+            }
+        })
+    end
+  },
+  {
+    
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        config = function ()
+            local configs = require("nvim-treesitter.configs")
+
+            configs.setup({
+                ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "rust" },
+                sync_install = false,
+                highlight = { enable = true },
+                indent = { enable = true },
+                modules = {},
+                auto_install = {},
+                ignore_install = {}
+            })
+        end
+    },
+    {
+        "rayliwell/tree-sitter-rstml",
+        dependencies = { "nvim-treesitter" },
+        build = ":TSUpdate",
+        config = function ()
+            require("tree-sitter-rstml").setup()
+        end
+    },
+    -- Automatic tag closing and renaming (optional but highly recommended)
+    {
+        "windwp/nvim-ts-autotag",
+        config = function()
+            require("nvim-ts-autotag").setup()
+        end,
+    },
+  --
   {
     "windwp/nvim-autopairs",
     config = function(plugin, opts)

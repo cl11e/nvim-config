@@ -23,6 +23,7 @@ return {
     diagnostics = {
       virtual_text = true,
       underline = true,
+      refreshSupport = false,
     },
     -- vim options can be configured here
     options = {

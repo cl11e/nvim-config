@@ -8,6 +8,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 
+
 -- validate that lazy is available
 if not pcall(require, "lazy") then
   -- stylua: ignore
@@ -20,6 +21,16 @@ require "lazy_setup"
 require "polish"
 require('lspconfig').gleam.setup({})
 require("lspconfig").vtsls.setup({})
+-- for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+--     local default_diagnostic_handler = vim.lsp.handlers[method]
+--     vim.lsp.handlers[method] = function(err, result, context, config)
+--         if err ~= nil and err.code == -32802 then
+--             return
+--         end
+--         return default_diagnostic_handler(err, result, context, config)
+--     end
+-- end
+
 -- local lspconfig = require("lspconfig") lspconfig["ts_ls"].setup({})
 
 -- vim.api.nvim_set_keymap("n", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
