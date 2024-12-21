@@ -11,19 +11,24 @@ return {
           ["<Leader>bn"] = { "<cmd>tabnew<cr>", desc = "New tab" },
           ["<Leader>bD"] = {
             function()
-              require("astroui.status").heirline.buffer_picker(function(bufnr)
-                require("astrocore.buffer").close(bufnr)
-              end)
+              require("astroui.status").heirline.buffer_picker(
+                function(bufnr) require("astrocore.buffer").close(bufnr) end
+              )
             end,
             desc = "Pick to close",
           },
           -- tables with the `name` key will be registered with which-key if it's installed
           -- this is useful for naming menus
           ["<Leader>b"] = { name = "Buffers" },
-          
+
           ["hjk"] = { ":w!<cr>", desc = "Save File" }, -- change description but the same command
-          ["hk"] = { "<esc>A", desc = "End Append" },  -- change description but the same command
-          [";;"] = { "<esc>A;", desc = "End ;" },  -- change description but the same command
+          ["hk"] = { "<esc>A", desc = "End Append" }, -- change description but the same command
+          [";;"] = { "<esc>A;", desc = "End ;" }, -- change description but the same command
+        },
+        i = {
+          [";;"] = { "<esc>A;<esc>", desc = "End ;" },
+          ["jj"] = { "<esc>", desc = "switch to normal mode", silent = true },
+          ["jk"] = { "<esc>", desc = "switch to normal mode", silent = true },
         },
         t = {
           -- setting a mapping to false will disable it
@@ -40,16 +45,12 @@ return {
         n = {
           -- this mapping will only be set in buffers with an LSP attached
           K = {
-            function()
-              vim.lsp.buf.hover()
-            end,
+            function() vim.lsp.buf.hover() end,
             desc = "Hover symbol details",
           },
           -- condition for only server with declaration capabilities
           gD = {
-            function()
-              vim.lsp.buf.declaration()
-            end,
+            function() vim.lsp.buf.declaration() end,
             desc = "Declaration of current symbol",
             cond = "textDocument/declaration",
           },

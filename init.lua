@@ -7,32 +7,30 @@ if not (vim.env.LAZY or (vim.uv or vim.loop).fs_stat(lazypath)) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
-
 -- validate that lazy is available
 if not pcall(require, "lazy") then
   -- stylua: ignore
   vim.api.nvim_echo({ { ("Unable to load lazy from: %s\n"):format(lazypath), "ErrorMsg" }, { "Press any key to exit...", "MoreMsg" } }, true, {})
-  vim.fn.getchar()vim.keymap.set("i", "jj", "<Esc>", { silent = true, desc = "Switch to Normal Mode" })
+  vim.fn.getchar()
+  vim.keymap.set("i", "jj", "<Esc>", { silent = true, desc = "Switch to Normal Mode" })
   vim.cmd.quit()
 end
 
 require "lazy_setup"
 require "polish"
-require('lspconfig').gleam.setup({})
-require("lspconfig").vtsls.setup({})
+require("lspconfig").gleam.setup {}
+require("lspconfig").vtsls.setup {}
 
-vim.keymap.set("i","jj","<Esc>", {silent = true, desc = "Switch to normal mode"})
-for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
-    local default_diagnostic_handler = vim.lsp.handlers[method]
-    vim.lsp.handlers[method] = function(err, result, context, config)
-        if err ~= nil and err.code == -32802 then
-            return
-        end
-        return default_diagnostic_handler(err, result, context, config)
-    end
+-- vim.keymap.set("i", "jj", "<Esc>", { silent = true, desc = "Switch to normal mode" })
+-- vim.keymap.set("i", "jk", "<Esc>", { silent = true, desc = "Switch to normal mode" })
+
+for _, method in ipairs { "textDocument/diagnostic", "workspace/diagnostic" } do
+  local default_diagnostic_handler = vim.lsp.handlers[method]
+  vim.lsp.handlers[method] = function(err, result, context, config)
+    if err ~= nil and err.code == -32802 then return end
+    return default_diagnostic_handler(err, result, context, config)
+  end
 end
-
 -- local lspconfig = require("lspconfig") lspconfig["ts_ls"].setup({})
 
 -- vim.api.nvim_set_keymap("n", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
