@@ -38,6 +38,18 @@ return {
       return opts
     end,
   },
+  -- {
+  --   "github/copilot.vim",
+  -- },
+  --
+  {
+    "Exafunction/codeium.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
+    },
+    config = function() require("codeium").setup {} end,
+  },
 
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },
@@ -46,50 +58,46 @@ return {
   {
     "L3MON4D3/LuaSnip",
     config = function(plugin, opts)
-      require "astronvim.plugins.configs.luasnip" (plugin, opts) -- include the default astronvim config that calls the setup call
+      require "astronvim.plugins.configs.luasnip"(plugin, opts) -- include the default astronvim config that calls the setup call
       -- add more custom luasnip configuration such as filetype extend or custom snippets
       local luasnip = require "luasnip"
       luasnip.filetype_extend("javascript", { "javascriptreact" })
     end,
   },
   {
-    
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-        config = function ()
-            local configs = require("nvim-treesitter.configs")
 
-            configs.setup({
-                ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "rust" },
-                sync_install = false,
-                highlight = { enable = true },
-                indent = { enable = true },
-                modules = {},
-                auto_install = {},
-                ignore_install = {}
-            })
-        end
-    },
-    {
-        "rayliwell/tree-sitter-rstml",
-        dependencies = { "nvim-treesitter" },
-        build = ":TSUpdate",
-        config = function ()
-            require("tree-sitter-rstml").setup()
-        end
-    },
-    -- Automatic tag closing and renaming (optional but highly recommended)
-    {
-        "windwp/nvim-ts-autotag",
-        config = function()
-            require("nvim-ts-autotag").setup()
-        end,
-    },
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+      local configs = require "nvim-treesitter.configs"
+
+      configs.setup {
+        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "rust" },
+        sync_install = false,
+        highlight = { enable = true },
+        indent = { enable = true },
+        modules = {},
+        auto_install = {},
+        ignore_install = {},
+      }
+    end,
+  },
+  {
+    "rayliwell/tree-sitter-rstml",
+    dependencies = { "nvim-treesitter" },
+    build = ":TSUpdate",
+    config = function() require("tree-sitter-rstml").setup() end,
+  },
+  -- Automatic tag closing and renaming (optional but highly recommended)
+  {
+    "windwp/nvim-ts-autotag",
+    config = function() require("nvim-ts-autotag").setup() end,
+  },
   --
   {
     "windwp/nvim-autopairs",
     config = function(plugin, opts)
-      require "astronvim.plugins.configs.nvim-autopairs" (plugin, opts) -- include the default astronvim config that calls the setup call
+      require "astronvim.plugins.configs.nvim-autopairs"(plugin, opts) -- include the default astronvim config that calls the setup call
       -- add more custom autopairs configuration such as custom rules
       local npairs = require "nvim-autopairs"
       local Rule = require "nvim-autopairs.rule"
@@ -97,18 +105,18 @@ return {
       npairs.add_rules(
         {
           Rule("$", "$", { "tex", "latex" })
-          -- don't add a pair if the next character is %
-              :with_pair(cond.not_after_regex "%%")
-          -- don't add a pair if  the previous character is xxx
-              :with_pair(
-                cond.not_before_regex("xxx", 3)
-              )
-          -- don't move right when repeat character
-              :with_move(cond.none())
-          -- don't delete if the next character is xx
-              :with_del(cond.not_after_regex "xx")
-          -- disable adding a newline when you press <cr>
-              :with_cr(cond.none()),
+            -- don't add a pair if the next character is %
+            :with_pair(cond.not_after_regex "%%")
+            -- don't add a pair if  the previous character is xxx
+            :with_pair(
+              cond.not_before_regex("xxx", 3)
+            )
+            -- don't move right when repeat character
+            :with_move(cond.none())
+            -- don't delete if the next character is xx
+            :with_del(cond.not_after_regex "xx")
+            -- disable adding a newline when you press <cr>
+            :with_cr(cond.none()),
         },
         -- disable for .vim files, but it work for another filetypes
         Rule("a", "a", "-vim")
