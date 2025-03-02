@@ -38,18 +38,23 @@ return {
       return opts
     end,
   },
+  {
+    "kiddos/gemini.nvim",
+    build = { "pip install -r requirements.txt", ":UpdateRemotePlugins" },
+    config = function() require("gemini").setup() end,
+  },
   -- {
   --   "github/copilot.vim",
   -- },
   --
-  {
-    "Exafunction/codeium.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "hrsh7th/nvim-cmp",
-    },
-    config = function() require("codeium").setup {} end,
-  },
+  -- {
+  --   "Exafunction/codeium.nvim",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "hrsh7th/nvim-cmp",
+  --   },
+  --   config = function() require("codeium").setup {} end,
+  -- },
 
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },

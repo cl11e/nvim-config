@@ -19,7 +19,6 @@ end
 require "lazy_setup"
 require "polish"
 require("lspconfig").gleam.setup {}
-require("lspconfig").vtsls.setup {}
 
 -- vim.keymap.set("i", "jj", "<Esc>", { silent = true, desc = "Switch to normal mode" })
 -- vim.keymap.set("i", "jk", "<Esc>", { silent = true, desc = "Switch to normal mode" })
