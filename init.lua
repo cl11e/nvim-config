@@ -12,34 +12,8 @@ if not pcall(require, "lazy") then
   -- stylua: ignore
   vim.api.nvim_echo({ { ("Unable to load lazy from: %s\n"):format(lazypath), "ErrorMsg" }, { "Press any key to exit...", "MoreMsg" } }, true, {})
   vim.fn.getchar()
-  vim.keymap.set("i", "jj", "<Esc>", { silent = true, desc = "Switch to Normal Mode" })
   vim.cmd.quit()
 end
 
 require "lazy_setup"
 require "polish"
-require("lspconfig").gleam.setup {}
-
--- vim.keymap.set("i", "jj", "<Esc>", { silent = true, desc = "Switch to normal mode" })
--- vim.keymap.set("i", "jk", "<Esc>", { silent = true, desc = "Switch to normal mode" })
-
-for _, method in ipairs { "textDocument/diagnostic", "workspace/diagnostic" } do
-  local default_diagnostic_handler = vim.lsp.handlers[method]
-  vim.lsp.handlers[method] = function(err, result, context, config)
-    if err ~= nil and err.code == -32802 then return end
-    return default_diagnostic_handler(err, result, context, config)
-  end
-end
--- local lspconfig = require("lspconfig") lspconfig["ts_ls"].setup({})
-
--- vim.api.nvim_set_keymap("n", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
--- vim.api.nvim_set_keymap("v", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
--- vim.api.nvim_set_keymap("n", "<LocalLeader>a", "<cmd>CodeCompanionToggle<cr>", { noremap = true, silent = true })
--- vim.api.nvim_set_keymap("v", "<LocalLeader>a", "<cmd>CodeCompanionToggle<cr>", { noremap = true, silent = true })
--- vim.api.nvim_set_keymap("v", "ga", "<cmd>CodeCompanionAdd<cr>", { noremap = true, silent = true })
---
--- -- Expand 'cc' into 'CodeCompanion' in the command line
--- vim.cmd([[cab cc CodeCompanion]])
-
-local opt = vim.opt
-opt.wrap = true

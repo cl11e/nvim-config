@@ -1,6 +1,7 @@
--- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 -- You can also add or configure plugins by creating files in this `plugins/` folder
+-- PLEASE REMOVE THE EXAMPLES YOU HAVE NO INTEREST IN BEFORE ENABLING THIS FILE
 -- Here are some examples:
 
 ---@type LazySpec
@@ -17,28 +18,29 @@ return {
 
   -- == Examples of Overriding Plugins ==
 
-  -- customize alpha options
+  -- customize dashboard options
   {
-    "goolord/alpha-nvim",
-    opts = function(_, opts)
-      -- customize the dashboard header
-      opts.section.header.val = {
-        " █████  ███████ ████████ ██████   ██████",
-        "██   ██ ██         ██    ██   ██ ██    ██",
-        "███████ ███████    ██    ██████  ██    ██",
-        "██   ██      ██    ██    ██   ██ ██    ██",
-        "██   ██ ███████    ██    ██   ██  ██████",
-        " ",
-        "    ███    ██ ██    ██ ██ ███    ███",
-        "    ████   ██ ██    ██ ██ ████  ████",
-        "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
-        "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
-        "    ██   ████   ████   ██ ██      ██",
-      }
-      return opts
-    end,
+    "folke/snacks.nvim",
+    opts = {
+      dashboard = {
+        preset = {
+          header = table.concat({
+            " █████  ███████ ████████ ██████   ██████ ",
+            "██   ██ ██         ██    ██   ██ ██    ██",
+            "███████ ███████    ██    ██████  ██    ██",
+            "██   ██      ██    ██    ██   ██ ██    ██",
+            "██   ██ ███████    ██    ██   ██  ██████ ",
+            "",
+            "███    ██ ██    ██ ██ ███    ███",
+            "████   ██ ██    ██ ██ ████  ████",
+            "██ ██  ██ ██    ██ ██ ██ ████ ██",
+            "██  ██ ██  ██  ██  ██ ██  ██  ██",
+            "██   ████   ████   ██ ██      ██",
+          }, "\n"),
+        },
+      },
+    },
   },
-
   -- {
   --   "github/copilot.vim",
   -- },
@@ -65,36 +67,7 @@ return {
       luasnip.filetype_extend("javascript", { "javascriptreact" })
     end,
   },
-  {
 
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    config = function()
-      local configs = require "nvim-treesitter.configs"
-
-      configs.setup {
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "rust" },
-        sync_install = false,
-        highlight = { enable = true },
-        indent = { enable = true },
-        modules = {},
-        auto_install = {},
-        ignore_install = {},
-      }
-    end,
-  },
-  {
-    "rayliwell/tree-sitter-rstml",
-    dependencies = { "nvim-treesitter" },
-    build = ":TSUpdate",
-    config = function() require("tree-sitter-rstml").setup() end,
-  },
-  -- Automatic tag closing and renaming (optional but highly recommended)
-  {
-    "windwp/nvim-ts-autotag",
-    config = function() require("nvim-ts-autotag").setup() end,
-  },
-  --
   {
     "windwp/nvim-autopairs",
     config = function(plugin, opts)
