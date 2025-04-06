@@ -15,8 +15,8 @@ if not pcall(require, "lazy") then
   vim.cmd.quit()
 end
 
-vim.opt.textwidth = 80
-vim.opt.wrapmargin = 0
-
+-- vim.opt.textwidth = 50
+-- vim.opt.wrapmargin = 0
 require "lazy_setup"
 require "polish"
+vim.opt.wrap = true -- sets vim.opt.wrap
