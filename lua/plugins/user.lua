@@ -8,7 +8,14 @@ if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 return {
 
   -- == Examples of Adding Plugins ==
-
+  {
+    "anurag3301/nvim-platformio.lua",
+    dependencies = {
+      { "akinsho/nvim-toggleterm.lua" },
+      { "nvim-telescope/telescope.nvim" },
+      { "nvim-lua/plenary.nvim" },
+    },
+  },
   "andweeb/presence.nvim",
   {
     "ray-x/lsp_signature.nvim",
