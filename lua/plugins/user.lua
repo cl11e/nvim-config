@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- You can also add or configure plugins by creating files in this `plugins/` folder
 -- PLEASE REMOVE THE EXAMPLES YOU HAVE NO INTEREST IN BEFORE ENABLING THIS FILE
 -- Here are some examples:
@@ -7,7 +5,39 @@ if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 ---@type LazySpec
 return {
 
-  -- == Examples of Adding Plugins ==
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" }, -- optional, for icons
+    version = "*",
+    config = function()
+      require("nvim-tree").setup {
+        renderer = {
+          group_empty = true, -- 🔥 this collapses folders with only one subfolder
+        },
+        view = {
+          width = 30,
+          side = "left",
+        },
+        git = {
+          enable = true,
+        },
+        on_attach = function(bufnr)
+          local api = require "nvim-tree.api"
+
+          local function opts(desc)
+            return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+          end
+
+          -- Set your custom keys
+          vim.keymap.set("n", "h", api.node.navigate.parent_close, opts "Close Directory")
+          vim.keymap.set("n", "l", api.node.open.edit, opts "Open")
+        end,
+      }
+
+      -- optional keybind to toggle the tree
+      vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle File Tree" })
+    end,
+  },
   {
     "anurag3301/nvim-platformio.lua",
     dependencies = {
