@@ -14,9 +14,14 @@ if not pcall(require, "lazy") then
   vim.fn.getchar()
   vim.cmd.quit()
 end
+-- disable netrw at the very start of your init.lua
 
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
 -- vim.opt.textwidth = 50
 -- vim.opt.wrapmargin = 0
 require "lazy_setup"
 require "polish"
 vim.opt.wrap = true -- sets vim.opt.wrap
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1

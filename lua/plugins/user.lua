@@ -23,19 +23,42 @@ return {
         },
         on_attach = function(bufnr)
           local api = require "nvim-tree.api"
-
           local function opts(desc)
             return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
           end
-
+          -- default mappings
+          api.config.mappings.default_on_attach(bufnr)
+          local function move_file_to()
+            local node = api.tree.get_node_under_cursor()
+            local file_src = node["absolute_path"]
+            local file_out = vim.fn.input("MOVE TO: ", file_src, "file")
+            local dir = vim.fn.fnamemodify(file_out, ":h")
+            vim.fn.system { "mkdir", "-p", dir }
+            vim.fn.system { "mv", file_src, file_out }
+          end
+          local function copy_file_to()
+            local node = api.tree.get_node_under_cursor()
+            local file_src = node["absolute_path"]
+            -- The args of input are {prompt}, {default}, {completion}
+            -- Read in the new file path using the existing file's path as the baseline.
+            local file_out = vim.fn.input("COPY TO: ", file_src, "file")
+            -- Create any parent dirs as required
+            local dir = vim.fn.fnamemodify(file_out, ":h")
+            vim.fn.system { "mkdir", "-p", dir }
+            -- Copy the file
+            vim.fn.system { "cp", "-R", file_src, file_out }
+          end
           -- Set your custom keys
-          vim.keymap.set("n", "h", api.node.navigate.parent_close, opts "Close Directory")
           vim.keymap.set("n", "l", api.node.open.edit, opts "Open")
+          vim.keymap.set("n", "h", api.node.navigate.parent_close, opts "Close Directory")
+          vim.keymap.set("n", "x", move_file_to, opts "Move File To")
+          vim.keymap.set("n", "c", copy_file_to, opts "Copy File To")
         end,
       }
 
       -- optional keybind to toggle the tree
       vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle File Tree" })
+      vim.keymap.set("n", "<F3>", "<cmd>NvimTreeFocus<CR>", { desc = "Focus File Tree" })
     end,
   },
   {

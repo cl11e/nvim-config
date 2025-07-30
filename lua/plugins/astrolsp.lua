@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
@@ -22,6 +20,7 @@ return {
       format_on_save = {
         enabled = true, -- enable or disable format on save globally
         allow_filetypes = { -- enable format on save for specified filetypes only
+          -- "rust",
           -- "go",
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
@@ -32,20 +31,33 @@ return {
         -- disable lua_ls formatting capability if you want to use StyLua to format your lua code
         -- "lua_ls",
       },
-      timeout_ms = 1000, -- default format timeout
+      timeout_ms = 4000, -- default format timeout
       -- filter = function(client) -- fully override the default formatting function
       --   return true
       -- end
     },
     -- enable servers that you already have installed without mason
     servers = {
+      "rust_analyzer",
       -- "pyright"
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      -- rust_analyzer = {
+      --   settings = {
+      --     ["rust-analyzer"] = {
+      --       checkOnSave = true
+      --     },
+      --   },
+      --   on_attach = function(client, bufnr)
+      --     -- Force-enable formatting support
+      --     client.server_capabilities.documentFormattingProvider = true
+      --   end,
+      -- },
     },
+
     -- customize how language servers are attached
     handlers = {
       -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
